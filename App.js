@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import MyTodoInput from './src/components/MyTodoInput';
+import MyAddTodoButton from './src/components/MyAddTodoButton';
 
 export default function App() {
   return (
@@ -8,7 +9,7 @@ export default function App() {
       <StatusBar style='dark' backgroundColor='#fff' hidden={false} translucent={true} />
       <View style={styles.inputAndButtonContainer}>
         <MyTodoInput />
-        <TouchableOpacity style={styles.addTaskButton}><Text style={{ color: '#fff' }}>Add</Text></TouchableOpacity>
+        <MyAddTodoButton />
       </View>
     </SafeAreaView>
   );
@@ -27,12 +28,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: '100%'
-  },
-  addTaskButton: {
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "black"
   }
 });
