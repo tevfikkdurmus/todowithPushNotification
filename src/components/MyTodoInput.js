@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 
 const MyTodoInput = ({ task, setTask, inputRef }) => {
-    return <TextInput ref={inputRef} value={task} onChangeText={text => setTask(text)} placeholderTextColor={'black'} cursorColor={'black'} style={styles.input} placeholder='Write something...' />
+    return <TextInput maxLength={40} ref={inputRef} value={task} onChangeText={text => setTask(text)} placeholderTextColor={'black'} cursorColor={'black'} style={styles.input} placeholder='Write something...' />
 }
 
 export default MyTodoInput

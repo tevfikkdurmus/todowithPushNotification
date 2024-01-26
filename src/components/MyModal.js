@@ -19,7 +19,7 @@ const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos }) => {
                     <MaterialIcons name="cancel" size={24} color="black" />
                 </TouchableOpacity>
                 <View style={styles.modalContentArea}>
-                    <TextInput autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
+                    <TextInput maxLength={40} autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
                 </View>
                 <TouchableOpacity onPress={updateTodo} style={styles.updateButton}>
                     <Text style={{ color: "#fff" }}>Update</Text>
