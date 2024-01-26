@@ -9,7 +9,7 @@ import MyModal from './src/components/MyModal';
 export default function App() {
   const inputRef = useRef();
 
-  const [todo, setTodos] = useState([{ id: 0, task: "asd", alert: null }])
+  const [todo, setTodos] = useState([])
   const [task, setTask] = useState("")
   const [isModalActive, setModalActive] = useState(false)
   const [idWillUpdate, setIdWillUpdate] = useState(-1)
