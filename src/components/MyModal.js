@@ -1,13 +1,28 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { useState } from 'react';
 
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-const MyModal = ({ setModalActive }) => {
+const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos }) => {
+    const [text, setText] = useState(data.task)
+
+    const updateTodo = () => {
+        var newTodoDate = data
+        newTodoDate.task = text
+        setModalActive(false)
+    }
+
     return (
         <View style={styles.modalContainer}>
             <View style={styles.modal}>
                 <TouchableOpacity onPress={() => setModalActive(false)} style={styles.modalCancelIcon}>
                     <MaterialIcons name="cancel" size={24} color="black" />
+                </TouchableOpacity>
+                <View style={styles.modalContentArea}>
+                    <TextInput autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
+                </View>
+                <TouchableOpacity onPress={updateTodo} style={styles.updateButton}>
+                    <Text style={{ color: "#fff" }}>Update</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -25,11 +40,12 @@ const styles = StyleSheet.create({
         zIndex: 1,
         padding: 50,
         justifyContent: "center",
-        alignContent: "center"
+        alignItems: "center"
     },
     modal: {
         backgroundColor: "#fff",
         height: "30%",
+        width: "80%",
         borderWidth: 1,
         shadowColor: "#000",
         shadowOffset: {
@@ -42,12 +58,28 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     modalCancelIcon: {
-        position: "absolute",
-        right: 0,
-        top: 0,
         width: 40,
         height: 40,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        alignSelf: "flex-end"
+    },
+    modalContentArea: {
+        paddingHorizontal: 20,
+        paddingTop: 20
+    },
+    modalInput: {
+        borderWidth: 1,
+        padding: 5,
+        paddingLeft: 10
+    },
+    updateButton: {
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        padding: 10,
+        margin: 5,
+        backgroundColor: "black",
+        borderRadius: 10
     }
 })

@@ -9,9 +9,10 @@ import MyModal from './src/components/MyModal';
 export default function App() {
   const inputRef = useRef();
 
-  const [todo, setTodos] = useState([{ id: 1, task: "asd", alert: null }])
+  const [todo, setTodos] = useState([{ id: 0, task: "asd", alert: null }])
   const [task, setTask] = useState("")
   const [isModalActive, setModalActive] = useState(false)
+  const [idWillUpdate, setIdWillUpdate] = useState(-1)
 
   const calculateNewTodoId = () => {
     if (todo.length == 0) {
@@ -29,8 +30,8 @@ export default function App() {
     setTodos(newTodoData)
   }
 
-  const updateTodoItem = (id) => {
-    console.log(id, " will update");
+  const updateProperties = (id) => {
+    setIdWillUpdate(id)
     setModalActive(true)
   }
 
@@ -55,14 +56,14 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {isModalActive && <MyModal setModalActive={setModalActive} />}
+      {isModalActive && <MyModal todo={todo} setTodos={setTodos} data={todo.find(object => object.id == idWillUpdate)} idWillUpdate={idWillUpdate} setModalActive={setModalActive} />}
       <StatusBar style='dark' backgroundColor='#fff' hidden={false} translucent={true} />
       <View style={styles.inputAndButtonContainer}>
         <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
         <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
       <View style={styles.todoListContainer}>
-        <MyTodoList updateTodoItem={updateTodoItem} deleteTodoItem={deleteTodoItem} data={todo} />
+        <MyTodoList updateProperties={updateProperties} deleteTodoItem={deleteTodoItem} data={todo} />
       </View>
     </SafeAreaView>
   );

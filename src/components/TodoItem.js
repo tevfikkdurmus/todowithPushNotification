@@ -2,12 +2,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-const TodoItem = ({ data, deleteTodoItem, updateTodoItem }) => {
+const TodoItem = ({ data, deleteTodoItem, updateProperties }) => {
     return (
         <View style={styles.todoItem}>
             <Text>{data.task}</Text>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity onPress={() => updateTodoItem(data.id)}>
+                <TouchableOpacity onPress={() => updateProperties(data.id)}>
                     <Entypo name="pencil" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteTodoItem(data.id)}>
