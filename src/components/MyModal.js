@@ -1,15 +1,17 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos }) => {
+const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodoListToAsyncStorage }) => {
     const [text, setText] = useState(data.task)
 
     const updateTodo = () => {
         if (text.length > 5) {
             var newTodoDate = data
             newTodoDate.task = text
+            storeTodoListToAsyncStorage(todo)
             setModalActive(false)
         }
         else {

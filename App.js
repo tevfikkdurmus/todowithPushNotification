@@ -5,6 +5,7 @@ import MyAddTodoButton from './src/components/MyAddTodoButton';
 import { useEffect, useRef, useState } from 'react';
 import MyTodoList from './src/components/MyTodoList';
 import MyModal from './src/components/MyModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const inputRef = useRef();
@@ -13,6 +14,29 @@ export default function App() {
   const [task, setTask] = useState("")
   const [isModalActive, setModalActive] = useState(false)
   const [idWillUpdate, setIdWillUpdate] = useState(-1)
+
+  useEffect(() => {
+    getTodoListFromAsyncStorage();
+  }, [])
+
+  const storeTodoListToAsyncStorage = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('todo-list', jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getTodoListFromAsyncStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('todo-list');
+      //console.log(jsonValue != null ? JSON.parse(jsonValue) : null);
+      setTodos(JSON.parse(jsonValue))
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const calculateNewTodoId = () => {
     if (todo.length == 0) {
@@ -28,6 +52,7 @@ export default function App() {
   const deleteTodoItem = (id) => {
     const newTodoData = todo.filter(object => object.id != id)
     setTodos(newTodoData)
+    storeTodoListToAsyncStorage(newTodoData)
   }
 
   const updateProperties = (id) => {
@@ -37,6 +62,7 @@ export default function App() {
 
   const addNewTodoItem = (data) => {
     setTodos([...todo, { id: calculateNewTodoId(), task: data.task, alert: data.alert }])
+    storeTodoListToAsyncStorage([...todo, { id: calculateNewTodoId(), task: data.task, alert: data.alert }])
   }
 
   const handleClickAddTaskButton = () => {
@@ -50,13 +76,9 @@ export default function App() {
     }
   }
 
-  useEffect(() => {
-    console.log(todo);
-  }, [todo])
-
   return (
     <SafeAreaView style={styles.container}>
-      {isModalActive && <MyModal todo={todo} setTodos={setTodos} data={todo.find(object => object.id == idWillUpdate)} idWillUpdate={idWillUpdate} setModalActive={setModalActive} />}
+      {isModalActive && <MyModal storeTodoListToAsyncStorage={storeTodoListToAsyncStorage} todo={todo} setTodos={setTodos} data={todo.find(object => object.id == idWillUpdate)} idWillUpdate={idWillUpdate} setModalActive={setModalActive} />}
       <StatusBar style='dark' backgroundColor='#fff' hidden={false} translucent={true} />
       <View style={styles.inputAndButtonContainer}>
         <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
