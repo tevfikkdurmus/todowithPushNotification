@@ -1,13 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Alert, Text, FlatList, ScrollView } from 'react-native';
 import MyTodoInput from './src/components/MyTodoInput';
 import MyAddTodoButton from './src/components/MyAddTodoButton';
 import { useEffect, useRef, useState } from 'react';
+import MyTodoList from './src/components/MyTodoList';
 
 export default function App() {
   const inputRef = useRef();
 
-  const [todo, setTodos] = useState([])
+  const [todo, setTodos] = useState([{ id: 1, task: "asd", alert: null }])
   const [task, setTask] = useState("")
 
   const calculateNewTodoId = () => {
@@ -47,6 +48,9 @@ export default function App() {
         <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
         <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
+      <View style={styles.todoListContainer}>
+        <MyTodoList data={todo} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -57,12 +61,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: '10%'
+    paddingHorizontal: '10%',
+    gap: 30
   },
   inputAndButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     width: '100%'
+  },
+  todoListContainer: {
+    width: "100%",
+    maxHeight: "60%"
   }
 });
