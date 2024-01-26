@@ -22,6 +22,11 @@ export default function App() {
     return newId
   }
 
+  const deleteTodoItem = (id) => {
+    const newTodoData = todo.filter(object => object.id != id)
+    setTodos(newTodoData)
+  }
+
   const addNewTodoItem = (data) => {
     setTodos([...todo, { id: calculateNewTodoId(), task: data.task, alert: data.alert }])
   }
@@ -49,7 +54,7 @@ export default function App() {
         <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
       <View style={styles.todoListContainer}>
-        <MyTodoList data={todo} />
+        <MyTodoList deleteTodoItem={deleteTodoItem} data={todo} />
       </View>
     </SafeAreaView>
   );
