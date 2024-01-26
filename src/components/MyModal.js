@@ -1,15 +1,20 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos }) => {
     const [text, setText] = useState(data.task)
 
     const updateTodo = () => {
-        var newTodoDate = data
-        newTodoDate.task = text
-        setModalActive(false)
+        if (text.length > 5) {
+            var newTodoDate = data
+            newTodoDate.task = text
+            setModalActive(false)
+        }
+        else {
+            Alert.alert("Hata", "Lütfen en az 6 karakter yazın")
+        }
     }
 
     return (
