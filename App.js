@@ -62,7 +62,8 @@ export default function App() {
         <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
         <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
-      <View style={styles.todoListContainer}>
+      <View style={[styles.todoListContainer, { borderWidth: todo.length > 0 ? 1 : 0 }]}>
+        {todo.length > 0 && <Text style={styles.todoListTitle}>Todo List</Text>}
         <MyTodoList updateProperties={updateProperties} deleteTodoItem={deleteTodoItem} data={todo} />
       </View>
     </SafeAreaView>
@@ -86,6 +87,12 @@ const styles = StyleSheet.create({
   },
   todoListContainer: {
     width: "100%",
-    maxHeight: "60%"
+    maxHeight: "60%",
+    borderRadius: 20,
+    paddingLeft: 10
+  },
+  todoListTitle: {
+    alignSelf: "center",
+    fontSize: 20
   }
 });
