@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Alert } from 'react-native';
 import MyTodoInput from './src/components/MyTodoInput';
 import MyAddTodoButton from './src/components/MyAddTodoButton';
 import { useEffect, useRef, useState } from 'react';
@@ -26,9 +26,14 @@ export default function App() {
   }
 
   const handleClickAddTaskButton = () => {
-    inputRef.current.blur()
-    setTask("")
-    addNewTodoItem({ task, alert: null })
+    if (task.length > 5) {
+      inputRef.current.blur()
+      setTask("")
+      addNewTodoItem({ task, alert: null })
+    }
+    else {
+      Alert.alert("Hata", "Lütfen en az 6 karakter yazın.")
+    }
   }
 
   useEffect(() => {
