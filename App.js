@@ -4,12 +4,14 @@ import MyTodoInput from './src/components/MyTodoInput';
 import MyAddTodoButton from './src/components/MyAddTodoButton';
 import { useEffect, useRef, useState } from 'react';
 import MyTodoList from './src/components/MyTodoList';
+import MyModal from './src/components/MyModal';
 
 export default function App() {
   const inputRef = useRef();
 
   const [todo, setTodos] = useState([{ id: 1, task: "asd", alert: null }])
   const [task, setTask] = useState("")
+  const [isModalActive, setModalActive] = useState(false)
 
   const calculateNewTodoId = () => {
     if (todo.length == 0) {
@@ -25,6 +27,11 @@ export default function App() {
   const deleteTodoItem = (id) => {
     const newTodoData = todo.filter(object => object.id != id)
     setTodos(newTodoData)
+  }
+
+  const updateTodoItem = (id) => {
+    console.log(id, " will update");
+    setModalActive(true)
   }
 
   const addNewTodoItem = (data) => {
@@ -48,13 +55,14 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {isModalActive && <MyModal setModalActive={setModalActive} />}
       <StatusBar style='dark' backgroundColor='#fff' hidden={false} translucent={true} />
       <View style={styles.inputAndButtonContainer}>
         <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
         <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
       <View style={styles.todoListContainer}>
-        <MyTodoList deleteTodoItem={deleteTodoItem} data={todo} />
+        <MyTodoList updateTodoItem={updateTodoItem} deleteTodoItem={deleteTodoItem} data={todo} />
       </View>
     </SafeAreaView>
   );
