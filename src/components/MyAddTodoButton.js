@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const MyAddTodoButton = () => {
-    return <TouchableOpacity style={styles.addTaskButton}><Text style={{ color: '#fff' }}>Add</Text></TouchableOpacity>
+const MyAddTodoButton = ({ handleClickAddTaskButton }) => {
+    return <TouchableOpacity onPress={handleClickAddTaskButton} style={styles.addTaskButton}><Text style={{ color: '#fff' }}>Add</Text></TouchableOpacity>
 }
 
 export default MyAddTodoButton

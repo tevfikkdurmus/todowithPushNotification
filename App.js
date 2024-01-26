@@ -2,14 +2,45 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import MyTodoInput from './src/components/MyTodoInput';
 import MyAddTodoButton from './src/components/MyAddTodoButton';
+import { useEffect, useRef, useState } from 'react';
 
 export default function App() {
+  const inputRef = useRef();
+
+  const [todo, setTodos] = useState([])
+  const [task, setTask] = useState("")
+
+  const calculateNewTodoId = () => {
+    if (todo.length == 0) {
+      return 0
+    }
+    const ids = todo.map(object => {
+      return object.id;
+    });
+    const newId = (Math.max(...ids) + 1);
+    return newId
+  }
+
+  const addNewTodoItem = (data) => {
+    setTodos([...todo, { id: calculateNewTodoId(), task: data.task, alert: data.alert }])
+  }
+
+  const handleClickAddTaskButton = () => {
+    inputRef.current.blur()
+    setTask("")
+    addNewTodoItem({ task, alert: null })
+  }
+
+  useEffect(() => {
+    console.log(todo);
+  }, [todo])
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style='dark' backgroundColor='#fff' hidden={false} translucent={true} />
       <View style={styles.inputAndButtonContainer}>
-        <MyTodoInput />
-        <MyAddTodoButton />
+        <MyTodoInput inputRef={inputRef} task={task} setTask={setTask} />
+        <MyAddTodoButton handleClickAddTaskButton={handleClickAddTaskButton} />
       </View>
     </SafeAreaView>
   );
