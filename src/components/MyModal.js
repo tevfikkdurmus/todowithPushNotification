@@ -5,18 +5,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodoListToAsyncStorage }) => {
+    const [isAlertAdded, setIsAlertAdded] = useState(data.alert ? true : false)
     const [text, setText] = useState(data.task)
 
     const updateTodo = () => {
         if (text.length > 5) {
             var newTodoDate = data
             newTodoDate.task = text
+            newTodoDate.alert = isAlertAdded ? true : null
             storeTodoListToAsyncStorage(todo)
             setModalActive(false)
         }
         else {
             Alert.alert("Hata", "Lütfen en az 6 karakter yazın")
         }
+    }
+
+    const addAlert = () => {
+        setIsAlertAdded(!isAlertAdded)
     }
 
     return (
@@ -28,8 +34,8 @@ const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodo
                 <View style={styles.modalContentArea}>
                     <TextInput maxLength={40} autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
                 </View>
-                <TouchableOpacity style={styles.addAlertButton}>
-                    <MaterialIcons name="add-alert" size={30} color="black" />
+                <TouchableOpacity onPress={addAlert} style={styles.addAlertButton}>
+                    <MaterialIcons name="add-alert" size={30} color={isAlertAdded ? "green" : "red"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={updateTodo} style={styles.updateButton}>
                     <Text style={{ color: "#fff" }}>Update</Text>
