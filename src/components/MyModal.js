@@ -23,11 +23,14 @@ const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodo
         <View style={styles.modalContainer}>
             <View style={styles.modal}>
                 <TouchableOpacity onPress={() => setModalActive(false)} style={styles.modalCancelIcon}>
-                    <MaterialIcons name="cancel" size={24} color="black" />
+                    <MaterialIcons name="cancel" size={30} color="black" />
                 </TouchableOpacity>
                 <View style={styles.modalContentArea}>
                     <TextInput maxLength={40} autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
                 </View>
+                <TouchableOpacity style={styles.addAlertButton}>
+                    <MaterialIcons name="add-alert" size={30} color="black" />
+                </TouchableOpacity>
                 <TouchableOpacity onPress={updateTodo} style={styles.updateButton}>
                     <Text style={{ color: "#fff" }}>Update</Text>
                 </TouchableOpacity>
@@ -88,5 +91,14 @@ const styles = StyleSheet.create({
         margin: 5,
         backgroundColor: "black",
         borderRadius: 10
+    },
+    addAlertButton: {
+        width: 40,
+        height: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0
     }
 })
