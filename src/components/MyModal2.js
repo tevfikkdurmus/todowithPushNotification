@@ -30,6 +30,10 @@ const MyModal2 = ({ storeTodoListToAsyncStorage, setIsAlertAdded, setAlertModalA
     }
 
     const addAlert = () => {
+        const xTime = new Date().getTime() / 1000
+        console.log("Şimdi ", xTime);
+        console.log("Alarm zamanı ", date.getTime() / 1000);
+        console.log("Ne kadar var ", ((date.getTime() / 1000) - xTime));
 
         if (!data.alert) {
             setIsAlertAdded(true)
