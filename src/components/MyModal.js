@@ -1,12 +1,15 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MyModal2 from './MyModal2';
 
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodoListToAsyncStorage }) => {
+    const inputRef = useRef();
     const [isAlertAdded, setIsAlertAdded] = useState(data.alert ? true : false)
     const [text, setText] = useState(data.task)
+    const [isAddAlertModalActive, setAlertModalActive] = useState(false)
 
     const updateTodo = () => {
         if (text.length > 5) {
@@ -21,20 +24,22 @@ const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodo
         }
     }
 
-    const addAlert = () => {
-        setIsAlertAdded(!isAlertAdded)
+    const openAlertModal = () => {
+        inputRef.current.blur();
+        setAlertModalActive(true)
     }
 
     return (
         <View style={styles.modalContainer}>
+            {isAddAlertModalActive && <MyModal2 storeTodoListToAsyncStorage={storeTodoListToAsyncStorage} setIsAlertAdded={setIsAlertAdded} data={data} todo={todo} setAlertModalActive={setAlertModalActive} />}
             <View style={styles.modal}>
                 <TouchableOpacity onPress={() => setModalActive(false)} style={styles.modalCancelIcon}>
                     <MaterialIcons name="cancel" size={30} color="black" />
                 </TouchableOpacity>
                 <View style={styles.modalContentArea}>
-                    <TextInput maxLength={40} autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
+                    <TextInput ref={inputRef} maxLength={40} autoFocus onChangeText={setText} value={text} style={styles.modalInput} placeholder='Please enter new value' />
                 </View>
-                <TouchableOpacity onPress={addAlert} style={styles.addAlertButton}>
+                <TouchableOpacity onPress={openAlertModal} style={styles.addAlertButton}>
                     <MaterialIcons name="add-alert" size={30} color={isAlertAdded ? "green" : "red"} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={updateTodo} style={styles.updateButton}>
