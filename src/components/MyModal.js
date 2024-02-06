@@ -5,7 +5,7 @@ import MyModal2 from './MyModal2';
 
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodoListToAsyncStorage }) => {
+const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodoListToAsyncStorage, scheduleNotification }) => {
     const inputRef = useRef();
     const [isAlertAdded, setIsAlertAdded] = useState(data.alert ? true : false)
     const [text, setText] = useState(data.task)
@@ -31,7 +31,7 @@ const MyModal = ({ setModalActive, data, idWillUpdate, todo, setTodos, storeTodo
 
     return (
         <View style={styles.modalContainer}>
-            {isAddAlertModalActive && <MyModal2 storeTodoListToAsyncStorage={storeTodoListToAsyncStorage} setIsAlertAdded={setIsAlertAdded} data={data} todo={todo} setAlertModalActive={setAlertModalActive} />}
+            {isAddAlertModalActive && <MyModal2 setModalActive={setModalActive} scheduleNotification={scheduleNotification} storeTodoListToAsyncStorage={storeTodoListToAsyncStorage} setIsAlertAdded={setIsAlertAdded} data={data} todo={todo} setAlertModalActive={setAlertModalActive} />}
             <View style={styles.modal}>
                 <TouchableOpacity onPress={() => setModalActive(false)} style={styles.modalCancelIcon}>
                     <MaterialIcons name="cancel" size={30} color="black" />

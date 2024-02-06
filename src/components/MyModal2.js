@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import Checkbox from 'expo-checkbox';
 
-const MyModal2 = ({ storeTodoListToAsyncStorage, setIsAlertAdded, setAlertModalActive, data, todo }) => {
+const MyModal2 = ({ storeTodoListToAsyncStorage, setIsAlertAdded, setAlertModalActive, data, todo, scheduleNotification, setModalActive }) => {
     //var m = moment(new Date(2011, 2, 12, 5, 0, 0));
     //console.log(m.hours());
-    console.log(data);
+    //console.log(data);
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('time');
     const [show, setShow] = useState(data.alert == null);
@@ -26,6 +26,7 @@ const MyModal2 = ({ storeTodoListToAsyncStorage, setIsAlertAdded, setAlertModalA
         }
 
         var _date = moment(date).format('LT');
+        console.log(_date);
         return _date
     }
 
@@ -37,21 +38,22 @@ const MyModal2 = ({ storeTodoListToAsyncStorage, setIsAlertAdded, setAlertModalA
 
         if (!data.alert) {
             setIsAlertAdded(true)
-            setAlertModalActive(false)
             var newTodoDate = data
             newTodoDate.alert = {
                 daily: isChecked,
-                time: date.getTime()
+                time: date.getTime() / 1000
             }
+            scheduleNotification(date.getTime() / 1000, { task: data.task, daily: isChecked })
             storeTodoListToAsyncStorage(todo)
         }
         else {
             setIsAlertAdded(false)
-            setAlertModalActive(false)
             var newTodoDate = data
             newTodoDate.alert = null
             storeTodoListToAsyncStorage(todo)
         }
+        setModalActive(false)
+        setAlertModalActive(false)
     }
 
     return (
